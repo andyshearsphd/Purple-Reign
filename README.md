@@ -2,7 +2,22 @@
 
 A browser game inspired by the early-1990s Mac version of Prince of Persia. It's 1997 in deindustrialized Muncie, Indiana. Ball Corporation is packing up for Colorado, slick executive Thurston Greaves and crooked Mayor Buck Dimsdale are greasing the deal, and one purple hippo has 60 minutes to do something about it.
 
-**Play it:** open `index.html` in any modern browser, or use the GitHub Pages link for this repository.
+**Play it:** https://andyshearsphd.github.io/Purple-Reign/ (or open `index.html` in any modern browser).
+
+![Title screen](screenshots/title.png)
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Fighting a mutant raccoon downtown](screenshots/fight.png) | ![A runaway Ball boxcar in the rail yards](screenshots/boxcar.png) |
+| Fighting a mutant raccoon downtown | A runaway Ball boxcar in the rail yards |
+| ![Earl Sloane and the Sloane Chemical pipe](screenshots/sloane.png) | ![Conveyor belts at the glass works](screenshots/glassworks.png) |
+| Earl Sloane and the Sloane Chemical sludge pipe | Conveyor belts and molten glass at the glass works |
+| ![Showdown with Thurston Greaves at the airport](screenshots/greaves.png) | ![The Muncie Morning Hoot](screenshots/newspaper.png) |
+| Showdown with Thurston Greaves at the airport | The Muncie Morning Hoot between levels |
+
+![The ending](screenshots/ending.png)
 
 ## Controls
 
