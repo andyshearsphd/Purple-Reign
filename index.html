@@ -533,10 +533,10 @@ function drawChases(ox,oy,inR){for(const s of LV.set){if(s.type!=='chase'||(s.st
    if(C0.type==='g')drawGoose({neck:[9,-17],flap:true,open:Math.floor(T*4+i)%3===0});else if(C0.type==='M')drawMuskrat({walk:true,open:w,lunge:false});else drawDog({walk:true,open:w,lunge:false});C.restore();}finally{SH=false;}}C.restore();}}
 
 /* ================= INPUT ================= */
-const keys={left:0,right:0,up:0,down:0,shift:0,act:0,enter:0,pause:0,cont:0,new:0,mute:0,w1:0,w2:0,w3:0,w4:0,swap:0,atk:0,block:0,arena:0,hard:0};
+const keys={left:0,right:0,up:0,down:0,shift:0,act:0,enter:0,pause:0,cont:0,new:0,mute:0,w1:0,w2:0,w3:0,w4:0,swap:0,atk:0,block:0,arena:0,hard:0,victory:0};
 let pressed={};
 function setKey(k,v){if(v&&!keys[k])pressed[k]=true;keys[k]=v?1:0;}
-const KM={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right',ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',Shift:'shift',' ':'act',Enter:'enter',p:'pause',P:'pause',Escape:'pause',c:'cont',C:'cont',n:'new',N:'new',m:'mute',M:'mute','1':'w1','2':'w2','3':'w3','4':'w4',q:'swap',Q:'swap',e:'swap',E:'swap',x:'atk',X:'atk',f:'atk',F:'atk',z:'block',Z:'block',r:'arena',R:'arena',h:'hard',H:'hard'};
+const KM={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right',ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',Shift:'shift',' ':'act',Enter:'enter',p:'pause',P:'pause',Escape:'pause',c:'cont',C:'cont',n:'new',N:'new',m:'mute',M:'mute','1':'w1','2':'w2','3':'w3','4':'w4',q:'swap',Q:'swap',e:'swap',E:'swap',x:'atk',X:'atk',f:'atk',F:'atk',z:'block',Z:'block',r:'arena',R:'arena',h:'hard',H:'hard',v:'victory',V:'victory'};
 addEventListener('keydown',e=>{const k=KM[e.key];if(k){e.preventDefault();audio();if(!e.repeat)setKey(k,1);else keys[k]=1;}});
 addEventListener('keyup',e=>{const k=KM[e.key];if(k){e.preventDefault();setKey(k,0);}if(e.key==='Shift')setKey('shift',0);});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=0;});
@@ -950,7 +950,7 @@ function update(dt){musUpdate();
  if(pressed.mute){muted=!muted;msgSet(muted?'Sound off.':'Sound on.',1.5);}
  const go=pressed.act||pressed.enter;
  switch(mode){
-  case 'title':if(pressed.cont&&saved)continueGame();else if(pressed.arena)startArena();else if(pressed.hard)newGame(true);else if(go||pressed.new)newGame(false);break;
+  case 'title':if(pressed.victory){if(!RANKS.length)RANKS=['A','S','B','A','A','B','S','A','B','A','S','A'];mode='ending';cardT=0;END=null;break;}if(pressed.cont&&saved)continueGame();else if(pressed.arena)startArena();else if(pressed.hard)newGame(true);else if(go||pressed.new)newGame(false);break;
   case 'intro':cardT+=dt;if(go&&cardT>0.3)startLevel(0);break;
   case 'story':cardT+=dt;if(go&&cardT>0.5){mode='card';cardT=0;}break;
   case 'results':cardT+=dt;if(go&&cardT>1.2)afterResults();break;
