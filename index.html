@@ -1474,7 +1474,6 @@ function drawCrown(x,y,sc,rot,shine){C.save();C.translate(x,y);C.rotate(rot||0);
  C.fillStyle='#c88a18';C.fillRect(-7.1,-1.4,14.2,1.8);C.fillStyle='#fff2a0';C.fillRect(-6.6,-1.2,13,0.5);
  for(const [jx,jy,col] of [[-7.6,-5.6,'#ff3050'],[-2.2,-8,'#40a0ff'],[2.2,-8,'#40a0ff'],[7.6,-5.6,'#ff3050']]){C.fillStyle='#fff6c0';C.beginPath();C.arc(jx,jy,1.1,0,7);C.fill();}
  C.fillStyle='#ff3050';C.beginPath();C.arc(0,-0.5,1.3,0,7);C.fill();C.fillStyle='#40e080';C.beginPath();C.arc(-4.4,-0.5,0.9,0,7);C.fill();C.beginPath();C.arc(4.4,-0.5,0.9,0,7);C.fill();
- if(shine){C.globalCompositeOperation='lighter';const a=0.5+0.5*Math.sin(T*6);C.globalAlpha=0.6*a;C.fillStyle='#ffffff';C.fillRect(-0.3,-11,0.6,4);C.fillRect(-2,-9.3,4,0.6);}
  C.restore();}
 function drawHead(X0,Y0,q){const cx=X0+10,cy=Y0+6;
  // ears
@@ -1565,7 +1564,7 @@ const FOES={
  A:{skin:'#e0b494',skinD:'#b88c6c',shirt:'#8a8e96',shirtD:'#6a6e76',pants:'#2a3040',pantsD:'#1c2230',shoe:'#101010',hat:'guard',hair:'#3a2a1a',belly:2,wep:'flashlight',badge:true,radio:true},
  O:{skin:'#e8892c',skinD:'#b8641a',shirt:'#26262c',shirtD:'#18181c',pants:'#5a4a6a',pantsD:'#443652',shoe:'#e8892c',belly:1,wep:'claw',mutant:'cat',bare:true,rags:true},
  F:{skin:'#eab494',skinD:'#c08a6a',shirt:'#3a3e30',shirtD:'#2a2e22',pants:'#3a3e30',pantsD:'#2a2e22',shoe:'#1a1208',hat:'slick',hair:'#ececec',belly:8,wep:'stick',tie:'#2a8a3a',grin:true,cigar:true},
- l:{skin:'#f2c8b0',skinD:'#c89880',shirt:'#ece6cc',shirtD:'#c8c0a0',pants:'#5a4632',pantsD:'#44341f',shoe:'#2a1a10',hat:'bald',hair:'#4a3a2a',belly:6,wep:'keyring',tank:true},
+ l:{skin:'#f2c8b0',skinD:'#c89880',shirt:'#ece6cc',shirtD:'#c8c0a0',pants:'#5a4632',pantsD:'#44341f',shoe:'#2a1a10',hat:'bald',hair:'#4a3a2a',belly:6,wep:'none',tank:true},
  g:{skin:'#8a7a68',skinD:'#6a5a4a',shirt:'#8a7a68',shirtD:'#6a5a4a',pants:'#3a4a62',pantsD:'#2a3850',shoe:'#e08a20',belly:3,wep:'wing',mutant:'goose',bare:true},
  M:{skin:'#7a5634',skinD:'#5a3e22',shirt:'#4a6a3a',shirtD:'#344e28',pants:'#3a3a32',pantsD:'#2a2a24',shoe:'#3a2a1a',belly:2,wep:'claw',mutant:'muskrat',bare:true,rags:true},
  Y:{skin:'#b8703a',skinD:'#8a5026',shirt:'#6a2a5a',shirtD:'#4e1e42',pants:'#4a4a5a',pantsD:'#36364a',shoe:'#5a3a1a',belly:0,wep:'claw',mutant:'squirrel',bare:true,rags:true},
