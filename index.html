@@ -1873,10 +1873,10 @@ function render(){
  else if(mode==='timeup'){txt('TIME IS UP',320,160,44,'#ff6060','center',serif);txt('Ball Corp is on its way to Colorado.',320,215,18,'#ffffff','center');if(cardT>1)txt(isTouch?'Tap to return to the title':'Press SPACE',320,300,14,'#c8b8e8','center');}
  else if(mode==='ending'){const t=cardT,cx=196;
   if(t>0.3)pf(V,'THE END',cx,14,5,CHROME,'center','#2a0a3a',3);if(HARD&&t>0.3)pf(V,'HARD AS MUNCIE',cx,66,1.3,'#ff7060','center','#000',2);
-  [[1.0,'BALL CORP STILL MOVED TO COLORADO.'],[1.8,'DIMSDALE IS OUT OF OFFICE.'],[2.4,'GREAVES NEVER MADE HIS FLIGHT.'],[3.2,'THE HIPPO DID NOT SAVE THE FACTORY.']].forEach(([tt,l],i)=>{if(t>tt){V.save();V.globalAlpha=Math.min(1,(t-tt)*2);pf(V,l,cx,92+i*24,1.35,'#ffffff','center','#000',2);V.restore();}});
-  if(t>4.6){const k=Math.min(1,(t-4.6)*3);V.save();V.translate(cx,212);V.scale(2-k,2-k);pf(V,'BUT HE STILL WON.',0,-10,2.6,CHROME,'center','#2a0a3a',3);V.restore();}
-  if(t>5.6)pf(V,'LONG LIVE THE MUNCIE HIPPO!',cx,250,1.6,'#ffd040','center','#000',2);
-  if(t>6.6)['TIME LEFT: '+Math.floor(gameTime/60)+' MIN '+Math.floor(gameTime%60)+' SEC','SCORE: '+SCORE.toLocaleString()+'   BEST: '+Math.max(SCORE,hiScore()).toLocaleString(),'RANKS: '+RANKS.map(r=>r||'-').join(' ')].forEach((l,i)=>pf(V,l,cx,288+i*22,1.25,'#c8b8ff','center','#000',2));
+  [[1.0,'DIMSDALE IS OUT OF OFFICE.'],[1.7,'GREAVES NEVER MADE HIS FLIGHT.'],[2.4,'THE HIPPO DID NOT SAVE THE FACTORY.'],[3.2,'BALL CORP STILL MOVED TO COLORADO.']].forEach(([tt,l],i)=>{if(t>tt){V.save();V.globalAlpha=Math.min(1,(t-tt)*2);pf(V,l,cx,92+i*24,1.35,'#ffffff','center','#000',2);V.restore();}});
+  if(t>4.6){const k=Math.min(1,(t-4.6)*3);V.save();V.translate(cx,214);V.scale(2-k,2-k);pf(V,'BUT HE STILL KICKED',0,-22,2.1,CHROME,'center','#2a0a3a',3);pf(V,'THEIR ASSES.',0,6,2.1,CHROME,'center','#2a0a3a',3);V.restore();}
+  if(t>5.6)pf(V,'LONG LIVE THE MUNCIE HIPPO!',cx,256,1.6,'#ffd040','center','#000',2);
+  if(t>6.6)['TIME LEFT: '+Math.floor(gameTime/60)+' MIN '+Math.floor(gameTime%60)+' SEC','SCORE: '+SCORE.toLocaleString()+'   BEST: '+Math.max(SCORE,hiScore()).toLocaleString(),'RANKS: '+RANKS.map(r=>r||'-').join(' ')].forEach((l,i)=>pf(V,l,cx,290+i*21,1.25,'#c8b8ff','center','#000',2));
   if(t>7.2)pf(V,isTouch?'TAP FOR TITLE':'PRESS SPACE',cx,368,1.6,'#ff78cc','center','#000',2);}
  else if(mode==='roundend'){txt('ROUND 3 COMPLETE',320,120,36,'#f0c040','center',serif);
   ['You chased Greaves all the way to the airport','with '+Math.ceil(gameTime/60)+' minutes left on the clock.','','Coming next round: the mayor and Greaves','boss fights, and the shadow hippo.'].forEach((l,i)=>txt(l,320,180+i*28,16,'#ffffff','center'));
