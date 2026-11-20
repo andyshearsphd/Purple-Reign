@@ -940,7 +940,9 @@ function updateWorld(dt){
 /* ================= UPDATE ================= */
 function titleButtons(){const b=[{label:saved?'NEW GAME':'START',col:CHROME,sc:3,act:()=>newGame(false)},{label:'HARD AS MUNCIE',col:'#ff7060',sc:2,act:()=>newGame(true)}];if(saved)b.push({label:'CONTINUE  LV '+(saved.li+1)+'  '+Math.ceil(saved.gameTime/60)+' MIN'+(saved.hard?'  HARD':''),col:'#ffffff',sc:2,act:()=>continueGame()});b.push({label:'PRACTICE ARENA',col:'#ffd040',sc:2,act:()=>startArena()});
  const h=34,gap=8,y0=saved?198:214;b.forEach((bt,i)=>{bt.y=y0+i*(h+gap);bt.h=h;});return b;}
+function quitToTitle(){mode='title';saved=loadSave();msgT=0;hintT=0;}
 function tapAt(x,y){
+ if(mode==='paused'){if(x>=220&&x<=420&&y>=292&&y<=330){quitToTitle();return;}mode='play';return;}
  if(mode==='title'){if(x>=40&&x<=300){for(const bt of titleButtons())if(y>=bt.y&&y<=bt.y+bt.h){bt.act();return;}}newGame(false);return;}
  if(mode==='play')return;
  pressed.act=true;}
@@ -962,7 +964,7 @@ function update(dt){musUpdate();
    if(P.st!=='climb'&&P.st!=='climbDown')curRoom=roomOf(P.x,P.y-24);
    {const rk=curRoom.rx+','+curRoom.ry;if(rk!==lastRoomKey){lastRoomKey=rk;roomEnterT=T;}}
    updateWorld(dt);if(mode!=='play')break;updatePlayer(dt);break;
-  case 'paused':if(pressed.pause||go)mode='play';break;
+  case 'paused':if(pressed.swap)quitToTitle();else if(pressed.pause||go)mode='play';break;
   case 'dead':if(!LEVELS[li].practice)gameTime-=dt;if(gameTime<=0){gameTime=0;mode='timeup';clearSave();saved=null;break;}
    updateWorld(dt);P.deadT+=dt;if(P.deadT>1.2&&(go||pressed.up))retryLevel();break;
   case 'ending':cardT+=dt;if(go&&cardT>0.5){if(cardT<7)cardT=7.3;else{mode='title';saved=loadSave();}}break;
@@ -1893,7 +1895,7 @@ function render(){
     if(hl)hintBox={lines:hl,hh,y:y0};
     if(showM){V.font='bold 14px '+UIF;const mw=Math.min(600,Math.max(...ml.map(l=>V.measureText(l).width))+24),my=hl?y0+hh+6:y0;panel(320-mw/2,my,mw,mh);ml.forEach((l,i)=>txt(l,320,my+18+i*18,14,'#ffffff','center'));}}}
   if(hintBox){panel(30,hintBox.y,580,hintBox.hh);hintBox.lines.forEach((l,i)=>txt(l,320,hintBox.y+22+i*20,14,'#fff4c8','center'));}
-  if(mode==='paused'){V.fillStyle='rgba(0,0,0,.55)';V.fillRect(0,0,640,400);txt('PAUSED',320,190,40,'#f0c040','center',serif);txt(isTouch?'Tap II or JUMP to resume':'Press P or SPACE to resume',320,235,14,'#ffffff','center');}
+  if(mode==='paused'){V.fillStyle='rgba(0,0,0,.55)';V.fillRect(0,0,640,400);txt('PAUSED',320,190,40,'#f0c040','center',serif);panel(220,246,200,38);txt(isTouch?'RESUME':'RESUME  (P or SPACE)',320,270,15,'#ffffff','center');panel(220,292,200,38);txt(isTouch?'QUIT TO TITLE':'QUIT TO TITLE  (Q)',320,316,15,'#ff9080','center');txt('Quitting saves your spot at the start of this level.',320,356,12,'#c8b8e8','center');}
   if(mode==='dead'){V.fillStyle='rgba(0,0,0,'+Math.min(.55,P.deadT*.5)+')';V.fillRect(0,0,640,360);
    if(P.deadT>0.3)pf(V,'KNOCKED OUT',320,112,3.2,CHROME,'center','#000',3);if(P.deadT>0.6){txt(deathText,320,170,18,'#ffffff','center');if(koPen)txt('-'+(koPen/60)+':00 ON THE CLOCK',320,238,15,'#ff8080','center');if(P.deadT>1.2)txt((CHECK&&CHECK.li===li)?(isTouch?'Tap to pick up from the payphone':'Press SPACE to pick up from the payphone'):(isTouch?'Tap to try this level again':'Press SPACE to try this level again'),320,210,14,'#c8b8e8','center');}}}}
 let bgD=null;function gradDitherBg(){if(!bgD){bgD=document.createElement('canvas');bgD.width=W;bgD.height=H;gradDither(bgD.getContext('2d'),['#05020c','#140828','#24103a'],0,H);}g.drawImage(bgD,0,0);}
