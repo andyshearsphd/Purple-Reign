@@ -17,8 +17,6 @@ A browser game inspired by the early-1990s Mac version of Prince of Persia. It's
 | ![Showdown with Thurston Greaves at the airport](screenshots/greaves.png) | ![The Muncie Morning Hoot](screenshots/newspaper.png) |
 | Showdown with Thurston Greaves at the airport | The Muncie Morning Hoot between levels |
 
-![The ending](screenshots/ending.png)
-
 ## Controls
 
 **Keyboard**
