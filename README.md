@@ -17,6 +17,10 @@ A browser game inspired by the early-1990s Mac version of Prince of Persia. It's
 | ![Showdown with Thurston Greaves at the airport](screenshots/greaves.png) | ![The Muncie Morning Hoot](screenshots/newspaper.png) |
 | Showdown with Thurston Greaves at the airport | The Muncie Morning Hoot between levels |
 
+![Chasing the Greaves limo down Walnut Street in a Pontiac Fiero](screenshots/walnut.png)
+
+Chasing the Greaves limo down Walnut Street in a Pontiac Fiero
+
 ## Controls
 
 **Keyboard**
@@ -30,11 +34,18 @@ A browser game inspired by the early-1990s Mac version of Prince of Persia. It's
 - P or Esc: pause
 - M: mute
 
+**Walnut Street (driving)**
+- Right: gas
+- Left: brake
+- Up and Down: change lanes
+- Space: punch it (a short burst of speed)
+
 **Phone:** an on-screen d-pad with JUMP, ATTACK, BLOCK and SWAP buttons appears automatically.
 
 ## Features
 
-- 12 levels across Muncie, from the rail yards and sewers to Ball Corp headquarters, City Hall and the county airport
+- 12 platforming levels across Muncie, from the rail yards and sewers to Ball Corp headquarters, City Hall and the county airport
+- A car chase down Walnut Street: the hippo drives a Pontiac Fiero after Greaves's limo, dodging traffic, potholes and whatever Greaves throws out the back window
 - Royal Pizza square slices heal, whole pizzas restore health, extra-large boxes raise max health, and triangle slices hurt
 - Mutant geese, muskrats, squirrels, raccoons, pit bulls and alley cats, plus rednecks, slumlords, businessmen, politicians, crooked cops and airport security
 - Bosses: Mr. Kitselman of Indiana Steel and Wire, Mayor Buck Dimsdale and Thurston Greaves, plus your own shadow
