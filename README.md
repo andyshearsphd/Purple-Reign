@@ -40,7 +40,7 @@ Chasing the Greaves limo down Walnut Street in a Pontiac Fiero
 - Up and Down: change lanes
 - Space: punch it (a short burst of speed)
 
-**Phone:** an on-screen d-pad with JUMP, ATTACK, BLOCK and SWAP buttons appears automatically.
+**Phone (landscape):** put your left thumb anywhere on the left half of the screen for a floating joystick, and use the round JUMP, ATTACK, BLOCK and SWAP buttons on the right. The pause button is in the top left corner. For full screen with no browser bars, use Add to Home Screen.
 
 ## Features
 
@@ -55,6 +55,6 @@ Chasing the Greaves limo down Walnut Street in a Pontiac Fiero
 
 ## Notes
 
-Everything is in one self-contained HTML file with no dependencies. Graphics and music are generated in code.
+The whole game is in one HTML file with no dependencies. Graphics and music are generated in code. A web app manifest, home screen icons and the Anton font (SIL Open Font License) sit next to it for phones.
 
 Thurston Greaves, Buck Dimsdale and The Muncie Morning Hoot are fictional.

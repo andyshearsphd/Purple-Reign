@@ -2,31 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Muncie Hippo: Purple Reign</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Purple Reign">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="preload" href="fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-html,body{margin:0;height:100%;background:#000;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@font-face{font-family:'Anton';src:url('fonts/anton.woff2') format('woff2');font-display:block}
+html,body{margin:0;padding:0;height:100%;width:100%;background:#000;overflow:hidden;position:fixed;inset:0;touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-canvas{image-rendering:pixelated;image-rendering:crisp-edges;display:block}
-#touch{position:fixed;inset:0;pointer-events:none;display:none}
-.tb{position:absolute;pointer-events:auto;width:62px;height:62px;border-radius:12px;background:rgba(255,255,255,.10);border:2px solid rgba(255,255,255,.30);color:#fff;font:bold 18px "Courier New",monospace;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
-.tb.wide{width:84px}
-.tb.small{width:44px;height:44px;font-size:14px}
-.tb.on{background:rgba(190,120,255,.5)}
+canvas{image-rendering:pixelated;image-rendering:crisp-edges;display:block;touch-action:none}
+body.phone #wrap{background:radial-gradient(ellipse at center,#2c1846 0%,#150b24 50%,#06030c 100%)}
+body.phone #wrap::before,body.phone #wrap::after{content:'';position:absolute;top:0;bottom:0;width:16%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 2px,transparent 2px 22px),repeating-linear-gradient(90deg,rgba(0,0,0,.25) 0 2px,transparent 2px 44px);pointer-events:none}
+body.phone #wrap::before{left:0}body.phone #wrap::after{right:0}
+body.phone canvas{position:relative;z-index:1;box-shadow:0 0 0 2px #3a2458,0 0 0 4px #120a1e,0 0 30px rgba(0,0,0,.9)}
+#controls{position:fixed;inset:0;pointer-events:none;display:none;z-index:3}
+#controls.on{display:block}
+.btn{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 15px/1 Anton,Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#fff;font-style:italic;text-shadow:2px 2px 0 #000;border:3px solid rgba(0,0,0,.75);box-sizing:border-box;box-shadow:inset -4px -5px 0 rgba(0,0,0,.35),inset 3px 3px 0 rgba(255,255,255,.3);opacity:.68}
+.btn.down{opacity:.95;transform:scale(.92);box-shadow:inset 3px 4px 0 rgba(0,0,0,.4)}
+#bJump{width:84px;height:84px;background:radial-gradient(circle at 35% 30%,#c89aff,#7a3ad0 55%,#3a1270);font-size:18px;right:calc(12px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom))}
+#bAtk{width:74px;height:74px;background:radial-gradient(circle at 35% 30%,#ffe27a,#e2a81c 55%,#8a5a08);font-size:15px;right:calc(91px + env(safe-area-inset-right));bottom:calc(61px + env(safe-area-inset-bottom))}
+#bBlock{width:68px;height:68px;background:radial-gradient(circle at 35% 30%,#ff9ad8,#c8247a 55%,#6a0a40);font-size:14px;right:calc(20px + env(safe-area-inset-right));bottom:calc(114px + env(safe-area-inset-bottom))}
+#bSwap{width:52px;height:52px;background:radial-gradient(circle at 35% 30%,#e8e8f4,#8a8aa0 55%,#3a3a4a);font-size:12px;right:calc(94px + env(safe-area-inset-right));bottom:calc(150px + env(safe-area-inset-bottom))}
+#stickBase{position:absolute;width:120px;height:120px;border-radius:50%;margin:-60px 0 0 -60px;background:rgba(255,255,255,.08);border:3px solid rgba(200,170,255,.35);box-sizing:border-box}
+#stickKnob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:rgba(220,200,255,.5);border:3px solid rgba(0,0,0,.6);box-sizing:border-box}
+#pauseBtn{position:fixed;top:calc(8px + env(safe-area-inset-top));left:calc(10px + env(safe-area-inset-left));width:88px;height:32px;display:none;border:2px solid rgba(0,0,0,.75);border-radius:16px;background:linear-gradient(#8a5ad0,#5b2d8e 55%,#2a1240);color:#ffe680;font:400 14px/28px Anton,Impact,sans-serif;font-style:italic;letter-spacing:1px;text-shadow:1px 1px 0 #000;text-align:center;padding:0;z-index:5;opacity:.8;-webkit-tap-highlight-color:transparent;touch-action:none}
+#pauseBtn.on{display:block}
+#rotate{position:fixed;inset:0;background:#150b24;color:#fff;display:none;z-index:20;flex-direction:column;align-items:center;justify-content:center;text-align:center;font:400 24px/1.4 Anton,Impact,"Arial Black",sans-serif;letter-spacing:1px;padding:30px;box-sizing:border-box}
+#rotate .phone{width:46px;height:80px;border:5px solid #f0c040;border-radius:9px;margin-bottom:26px;animation:tilt 1.8s ease-in-out infinite}
+@keyframes tilt{0%,30%{transform:rotate(0deg)}60%,100%{transform:rotate(-90deg)}}
+@media (orientation:portrait) and (pointer:coarse){#rotate{display:flex}}
 </style>
 </head>
 <body>
 <div id="wrap"><canvas id="c" width="640" height="400"></canvas></div>
-<div id="touch">
-  <div class="tb" data-k="left" style="left:12px;bottom:76px">&#9664;</div>
-  <div class="tb" data-k="right" style="left:144px;bottom:76px">&#9654;</div>
-  <div class="tb" data-k="up" style="left:78px;bottom:142px">&#9650;</div>
-  <div class="tb" data-k="down" style="left:78px;bottom:10px">&#9660;</div>
-  <div class="tb wide" data-k="act" style="right:14px;bottom:14px;height:70px;width:92px">JUMP</div>
-  <div class="tb" data-k="atk" style="right:116px;bottom:14px;height:70px;width:76px;font-size:14px">ATTACK</div>
-  <div class="tb" data-k="block" style="right:14px;bottom:94px;height:50px;width:92px;font-size:14px">BLOCK</div>
-  <div class="tb small" data-k="pause" style="right:12px;top:10px">II</div>
-  <div class="tb" data-k="swap" style="right:116px;bottom:94px;height:50px;width:76px;font-size:13px">SWAP</div>
+<div id="controls">
+  <div id="stickBase"><div id="stickKnob"></div></div>
+  <div class="btn" id="bSwap">SWAP</div>
+  <div class="btn" id="bBlock">BLOCK</div>
+  <div class="btn" id="bAtk">ATTACK</div>
+  <div class="btn" id="bJump">JUMP</div>
+</div>
+<button id="pauseBtn" aria-label="Pause">II PAUSE</button>
+<div id="rotate"><div class="phone"></div>TURN YOUR PHONE SIDEWAYS<br><span style="font-size:15px;color:#f0c040">MUNCIE HIPPO: PURPLE REIGN PLAYS IN LANDSCAPE</span></div>
 </div>
 <script>
 'use strict';
@@ -35,8 +59,9 @@ const W=320,H=200,VH=180,TW=32,TH=60,FL=5,RW=10,RH=3,HANG=52,BODY=46,HW=6;
 const G=900,RUN=120,RUNACC=900,RJX=182,RJY=-215,SJX=110,SJY=-175,JUY=-170;
 const SAVE_KEY='hippoOfPurple_save_v1';
 const isTouch=(window.matchMedia&&matchMedia('(pointer: coarse)').matches)||('ontouchstart' in window);
-const K=isTouch?{JUMP:'JUMP',UP:'UP',DOWN:'the DOWN button',RUN:'the arrow buttons',TAP:'Tap an arrow',ATK:'ATTACK',FIGHT:'Press ATTACK to swing and hold BLOCK to block. The arrows shuffle you back and forth. DOWN puts your weapon away so you can run. SWAP changes weapons.'}:{JUMP:'SPACE',UP:'UP',DOWN:'DOWN',RUN:'the arrow keys',TAP:'Tap an arrow key',ATK:'X',FIGHT:'Press X to swing and hold Z to block. The arrows shuffle you back and forth. DOWN puts your weapon away so you can run. 1 to 3 or Q switch weapons.'};
-function fmt(s){return s.replace(/\{(\w+)\}/g,(m,k)=>K[k]||m);}
+const K=isTouch?{JUMP:'JUMP',UP:'UP on the stick',DOWN:'DOWN on the stick',RUN:'the stick',TAP:'Nudge the stick',ATK:'ATTACK',FIGHT:'Press ATTACK to swing and hold BLOCK to block. Nudge the stick to shuffle back and forth. Pull the stick DOWN to put your weapon away so you can run. SWAP changes weapons.'}:{JUMP:'SPACE',UP:'UP',DOWN:'DOWN',RUN:'the arrow keys',TAP:'Tap an arrow key',ATK:'X',FIGHT:'Press X to swing and hold Z to block. The arrows shuffle you back and forth. DOWN puts your weapon away so you can run. 1 to 3 or Q switch weapons.'};
+function touchText(s){if(!isTouch||typeof s!=='string')return s;return s.replace(/Keys 1 to 3 \(or Q\) switch:/g,'SWAP cycles them:').replace(/Key [1-4] selects it\./g,'SWAP selects it.').replace(/\bKey [1-4]\./g,'SWAP to it.').replace(/block them with Z/g,'block them with BLOCK').replace(/\b(press|Press|hold|Hold) (UP|DOWN)\b/g,(m,a,b)=>a+' the stick '+b).replace(/\bSPACE\b/g,'JUMP');}
+function fmt(s){return touchText(s.replace(/\{(\w+)\}/g,(m,k)=>K[k]||m));}
 
 /* ================= LEVELS =================
  # wall   . empty   = floor   _ fire escape grate   ~ rotten boards (crumble)
@@ -103,8 +128,8 @@ const HP={out:'#240a34',skin:'#8d4fc4',skinD:'#6b3699',snout:'#aa7adc',belly:'#c
 const cv=document.getElementById('c'),V=cv.getContext('2d');
 const world=document.createElement('canvas');world.width=W*2;world.height=H*2;const g=world.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';
 let C=g;
-function fit(){const s=Math.min(innerWidth/640,innerHeight/400);cv.style.width=Math.floor(640*s)+'px';cv.style.height=Math.floor(400*s)+'px';}
-addEventListener('resize',fit);fit();
+function fit(){const ph=document.body.classList.contains('phone'),gut=ph?innerWidth*0.16:0;const s=Math.min((innerWidth-2*gut)/640,innerHeight/400);cv.style.width=Math.floor(640*s)+'px';cv.style.height=Math.floor(400*s)+'px';}
+addEventListener('resize',()=>{fit();if(typeof placeStick==='function'&&stickId===null)placeStick(...defStick());});addEventListener('orientationchange',()=>setTimeout(()=>dispatchEvent(new Event('resize')),250));fit();
 
 /* ================= DRAW HELPERS ================= */
 let SH=false;
@@ -618,7 +643,7 @@ function initDrive(){const R0=HARD?14000:15000;
   lx:440,lv:LBASE,ramCd:0,blink:0,lnext:1,llane:1,lplane:1,lhp:HARD?8:6,lmax:HARD?8:6,lsurge:0,lchg:2.6,lwob:0,lflash:0,throwT:3,throwAnim:0,lean:0,thrown:0,
   cars:[],holes:[],objs:[],pizzas:[],spawnX:760,holeX:1000,winT:0,lostT:0,sideCd:0,rams:0,close:0,cam:50,smoke:[],ditch:null,runner:null,lastHit:null};
  for(const f of [0.28,0.55,0.79])D.pizzas.push({x:Math.round(R0*f),lane:Math.floor(Math.random()*3),taken:false});
- hint=isTouch?'Walnut Street. Hold RIGHT for gas and LEFT to brake. UP and DOWN change lanes. JUMP punches it. Ram the limo before it reaches the airport!':'Walnut Street. Hold RIGHT for gas and LEFT to brake. UP and DOWN change lanes. SPACE punches it. Ram the limo before it reaches the airport!';hintT=8;
+ hint=isTouch?'Walnut Street. Push the stick RIGHT for gas and LEFT to brake. Push UP and DOWN to change lanes. JUMP punches it. Ram the limo before it reaches the airport!':'Walnut Street. Hold RIGHT for gas and LEFT to brake. UP and DOWN change lanes. SPACE punches it. Ram the limo before it reaches the airport!';hintT=8;
  msgSet('Greaves is getting away down Walnut Street! RAM THAT LIMO!',3.5);}
 function laneFree(l,x0,x1){return !D.cars.some(c=>c.lane===l&&c.x+CAR_T[c.k].len/2>x0&&c.x-CAR_T[c.k].len/2<x1);}
 function throwObj(){const d=D;const tl=Math.random()<0.7?d.ptl:Math.max(0,Math.min(2,d.ptl+(Math.random()<0.5?-1:1)));
@@ -855,16 +880,37 @@ const KM={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'rig
 addEventListener('keydown',e=>{const k=KM[e.key];if(k){e.preventDefault();audio();if(!e.repeat)setKey(k,1);else keys[k]=1;}});
 addEventListener('keyup',e=>{const k=KM[e.key];if(k){e.preventDefault();setKey(k,0);}if(e.key==='Shift')setKey('shift',0);});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=0;});
-const touchEl=document.getElementById('touch');
-function showTouch(){touchEl.style.display='block';}
+const elCtl=document.getElementById('controls'),elBase=document.getElementById('stickBase'),elKnob=document.getElementById('stickKnob'),elPause=document.getElementById('pauseBtn');
+const BTN={act:document.getElementById('bJump'),atk:document.getElementById('bAtk'),block:document.getElementById('bBlock'),swap:document.getElementById('bSwap')};
+const tch=new Map(),held={act:0,atk:0,block:0,swap:0},sdir={left:0,right:0,up:0,down:0};let stickId=null,so=[0,0],phoneOn=false;
+function placeStick(x,y){elBase.style.left=x+'px';elBase.style.top=y+'px';}
+function setKnob(dx,dy){elKnob.style.transform='translate('+dx+'px,'+dy+'px)';}
+function defStick(){const r=cv.getBoundingClientRect();return [Math.max(72,r.left/2),innerHeight-92];}
+function showTouch(){if(phoneOn)return;phoneOn=true;document.body.classList.add('phone');fit();placeStick(...defStick());}
+function stickSet(dx,dy){const L=Math.hypot(dx,dy),w={left:0,right:0,up:0,down:0};if(L>=14){if(Math.abs(dx)>=Math.abs(dy)*0.75)w[dx>0?'right':'left']=1;else w[dy>0?'down':'up']=1;}
+ for(const k in w)if(w[k]!==sdir[k]){sdir[k]=w[k];setKey(k,w[k]);}}
+function moveStick(x,y){let dx=x-so[0],dy=y-so[1];const L=Math.hypot(dx,dy),mx=42;if(L>mx){so[0]+=dx*(1-mx/L);so[1]+=dy*(1-mx/L);placeStick(so[0],so[1]);dx=x-so[0];dy=y-so[1];}setKnob(dx,dy);stickSet(dx,dy);}
+function btnAt(x,y){let best=null,bd=1e9;for(const k in BTN){const r=BTN[k].getBoundingClientRect();const d=Math.hypot(x-(r.left+r.width/2),y-(r.top+r.height/2))/(r.width/2);if(d<bd){bd=d;best=k;}}return bd<=1.9?best:null;}
+function holdBtn(k,v){held[k]=Math.max(0,held[k]+(v?1:-1));const on=held[k]>0;if(on!==!!keys[k])setKey(k,on);BTN[k].classList.toggle('down',on);}
+const ctlLive=()=>mode==='play';
+function tStart(id,x,y){audio();showTouch();
+ if(ctlLive()){if(x<innerWidth*0.5){if(stickId===null){stickId=id;so=[x,y];placeStick(x,y);setKnob(0,0);}return;}const k=btnAt(x,y);tch.set(id,k);if(k)holdBtn(k,1);return;}
+ const r=cv.getBoundingClientRect();tapAt((x-r.left)/r.width*640,(y-r.top)/r.height*400);}
+function tMove(id,x,y){if(id===stickId){moveStick(x,y);return;}if(!tch.has(id))return;const o=tch.get(id),k=btnAt(x,y);if(k!==o){if(o)holdBtn(o,0);if(k)holdBtn(k,1);tch.set(id,k);}}
+function tEnd(id){if(id===stickId){stickId=null;stickSet(0,0);setKnob(0,0);placeStick(...defStick());return;}if(tch.has(id)){const o=tch.get(id);if(o)holdBtn(o,0);tch.delete(id);}}
+const onT=fn=>e=>{if(e.target===elPause)return;e.preventDefault();for(const t of e.changedTouches)fn(t.identifier,t.clientX,t.clientY);};
+document.addEventListener('touchstart',onT(tStart),{passive:false});
+document.addEventListener('touchmove',onT(tMove),{passive:false});
+document.addEventListener('touchend',onT(tEnd),{passive:false});
+document.addEventListener('touchcancel',onT(tEnd),{passive:false});
+for(const ev of ['gesturestart','gesturechange','dblclick','contextmenu'])document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
+const pauseTap=e=>{e.preventDefault();e.stopPropagation();audio();if(mode==='play'){setKey('pause',1);setKey('pause',0);}};
+elPause.addEventListener('touchstart',pauseTap,{passive:false});elPause.addEventListener('mousedown',pauseTap);
+let jumpLbl='JUMP';
+function syncControls(){const live=phoneOn&&(mode==='play'||mode==='dead');const jl=(LV&&LV.drive)?'PUNCH IT':'JUMP';if(jl!==jumpLbl){jumpLbl=jl;BTN.act.textContent=jl;BTN.act.style.fontSize=jl==='JUMP'?'18px':'15px';}elCtl.classList.toggle('on',live);elPause.classList.toggle('on',phoneOn&&mode==='play');
+ if(!live&&(stickId!==null||tch.size)){stickId=null;stickSet(0,0);setKnob(0,0);for(const [id,o] of tch)if(o)holdBtn(o,0);tch.clear();}}
 if(isTouch)showTouch();
-addEventListener('touchstart',showTouch,{passive:true,once:true});
-document.querySelectorAll('.tb').forEach(b=>{const k=b.dataset.k;
- const on=e=>{e.preventDefault();audio();setKey(k,1);b.classList.add('on');try{b.setPointerCapture(e.pointerId);}catch(_){}};
- const off=e=>{e.preventDefault();setKey(k,0);b.classList.remove('on');};
- b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('lostpointercapture',off);
- b.addEventListener('contextmenu',e=>e.preventDefault());});
-cv.addEventListener('pointerdown',e=>{audio();const r=cv.getBoundingClientRect();tapAt((e.clientX-r.left)/r.width*640,(e.clientY-r.top)/r.height*400);});
+cv.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;audio();const r=cv.getBoundingClientRect();tapAt((e.clientX-r.left)/r.width*640,(e.clientY-r.top)/r.height*400);});
 
 /* ================= SAVE ================= */
 function saveGame(){if(LEVELS[li].practice)return;try{localStorage.setItem(SAVE_KEY,JSON.stringify({li,gameTime,maxHp,weapons,cur,ammo,score:SCORE,ranks:RANKS,hard:HARD}));}catch(e){}}
@@ -910,7 +956,7 @@ const colOf=x=>Math.floor(x/TW),rowOf=y=>Math.floor((y-1)/TH),surf=r=>(r+1)*TH-F
 const approach=(v,t,a)=>v<t?Math.min(t,v+a):Math.max(t,v-a);
 
 function newPlayer(s){return {x:s.c*TW+16,y:surf(s.r),vx:0,vy:0,f:1,st:'stand',t:0,hp:maxHp,inv:0,apexY:0,anim:0,lastPot:null,pj:false,pjT:0,noGrab:0,upLock:true,blocking:false,blockStart:-9,crit:false,combo:1,sheathT:0,struck:false,hc:0,hr:0,gc:0,gr:0,gd:1,item:null,deadT:0,hop:false,landDur:0.1,sx:0,tx:0,ty:0,tf:1,cx0:0,cy0:0,dx:0};}
-function msgSet(s,t){msg=s;msgT=t||3;}
+function msgSet(s,t){msg=touchText(s);msgT=t||3;}
 
 function newGame(hard){HARD=!!hard;li=0;gameTime=HARD?2700:3600;maxHp=5;weapons={};cur='fists';ammo=0;SCORE=0;RANKS=[];mode='intro';cardT=0;}
 function startArena(){HARD=false;const i=LEVELS.findIndex(l=>l.practice);gameTime=3600;maxHp=5;weapons={};cur='fists';ammo=0;startLevel(i);}
@@ -2392,7 +2438,7 @@ let last=performance.now(),frozen=false;
 function frame(now){let dt=Math.min(0.05,(now-last)/1000);last=now;
  const steps=Math.max(1,Math.ceil(dt/(1/120))),sdt=dt/steps;
  if(!frozen)for(let i=0;i<steps;i++){update(sdt);if(i===0)pressed={};}
- render();requestAnimationFrame(frame);}
+ render();syncControls();requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 window.__hop={give(w){if(w!=="fists")weapons[w]=true;cur=w;},freeze(v){frozen=v;},clearPressed(){pressed={};},get P(){return P;},get LV(){return LV;},get mode(){return mode;},keys,setKey,newGame,startLevel,beginPlay,update,tile,standable};
 </script>
